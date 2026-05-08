@@ -23,24 +23,51 @@
   --radius: 12px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg); color: var(--text); min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
 #app { max-width: 600px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; }
-nav { position:sticky; top:0; z-index:100; background:var(--bg); border-bottom:1px solid var(--border); display:flex; height:56px; }
-nav a { flex:1; display:flex; align-items:center; justify-content:center; text-decoration:none; color:var(--text-light); font-size:15px; font-weight:500; border-bottom:2px solid transparent; transition:all .2s; }
+nav {
+  position:sticky; top:0; z-index:100; background:var(--bg);
+  border-bottom:1px solid var(--border); display:flex; height:56px;
+}
+nav a {
+  flex:1; display:flex; align-items:center; justify-content:center;
+  text-decoration:none; color:var(--text-light); font-size:15px; font-weight:500;
+  border-bottom:2px solid transparent; transition:all .2s;
+}
 nav a.active { color:var(--accent); border-bottom-color:var(--accent); }
 main { flex:1; padding:16px; overflow-y:auto; }
 .page { display:none; }
 .page.active { display:block; }
-.card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; margin-bottom:16px; }
-label { display:block; font-size:13px; color:var(--text-light); margin-bottom:6px; font-weight:500; }
-textarea, input[type="text"], input[type="url"], input[type="password"], input[type="file"] {
+
+.card {
+  background:var(--card); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:20px; margin-bottom:16px;
+}
+label {
+  display:block; font-size:13px; color:var(--text-light);
+  margin-bottom:6px; font-weight:500;
+}
+
+textarea, input[type="text"], input[type="url"], input[type="password"] {
   width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:8px;
   font-size:15px; font-family:inherit; color:var(--text); background:#faf8f5;
   transition:border-color .2s; resize:vertical; -webkit-appearance:none;
 }
-textarea:focus, input:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 2px rgba(139,69,19,0.12); }
+textarea:focus, input:focus {
+  outline:none; border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(139,69,19,0.12);
+}
 textarea { min-height:160px; line-height:1.8; }
-.btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:10px 20px; border:none; border-radius:8px; font-size:14px; font-weight:500; cursor:pointer; transition:all .2s; font-family:inherit; }
+
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  padding:10px 20px; border:none; border-radius:8px; font-size:14px;
+  font-weight:500; cursor:pointer; transition:all .2s; font-family:inherit;
+}
 .btn:active { transform:scale(.97); }
 .btn-primary { background:var(--accent); color:#fff; }
 .btn-outline { background:transparent; color:var(--accent); border:1px solid var(--accent); }
@@ -48,40 +75,123 @@ textarea { min-height:160px; line-height:1.8; }
 .btn-block { width:100%; margin-top:16px; }
 .btn:disabled { opacity:.5; pointer-events:none; }
 .btn-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+
 .title-row { display:flex; gap:8px; align-items:flex-end; margin-top:12px; }
 .title-row input { flex:1; }
-.poem-item { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; margin-bottom:12px; cursor:pointer; transition:all .2s; position:relative; }
+
+/* Poem list */
+.poem-item {
+  background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:16px; margin-bottom:12px; cursor:pointer; transition:all .2s; position:relative;
+}
 .poem-item:active { transform:scale(.98); }
-.poem-item .item-title { font-size:16px; font-weight:600; color:var(--accent); margin-bottom:6px; }
-.poem-item .item-preview { font-size:13px; color:var(--text-light); line-height:1.6; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.poem-item .item-title {
+  font-size:16px; font-weight:600; color:var(--accent); margin-bottom:6px;
+}
+.poem-item .item-preview {
+  font-size:13px; color:var(--text-light); line-height:1.6;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
 .poem-item .item-date { font-size:11px; color:#b8a590; margin-top:8px; }
-.delete-btn { position:absolute; top:12px; right:12px; width:28px; height:28px; border-radius:50%; border:none; background:#f5e6dc; color:#c0392b; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .2s; }
+
+.delete-btn {
+  position:absolute; top:12px; right:12px; width:28px; height:28px;
+  border-radius:50%; border:none; background:#f5e6dc; color:#c0392b;
+  font-size:16px; cursor:pointer; display:flex; align-items:center;
+  justify-content:center; opacity:0; transition:opacity .2s;
+}
 .poem-item:active .delete-btn { opacity:1; }
-.modal-overlay { position:fixed; inset:0; background:rgba(44,24,16,0.5); z-index:200; display:flex; align-items:flex-end; justify-content:center; padding:16px; animation:fadeIn .2s; }
+
+/* Modal */
+.modal-overlay {
+  position:fixed; inset:0; background:rgba(44,24,16,0.5); z-index:200;
+  display:flex; align-items:flex-end; justify-content:center;
+  padding:16px; animation:fadeIn .2s;
+}
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-.modal { background:var(--card); border-radius:var(--radius) var(--radius) 0 0; max-width:600px; width:100%; max-height:85vh; overflow-y:auto; padding:24px; animation:slideUp .3s; }
+.modal {
+  background:var(--card); border-radius:var(--radius) var(--radius) 0 0;
+  max-width:600px; width:100%; max-height:85vh; overflow-y:auto;
+  padding:24px; animation:slideUp .3s;
+}
 @keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
-.modal .modal-title { font-size:20px; font-weight:700; color:var(--accent); text-align:center; margin-bottom:8px; }
-.modal .modal-content { text-align:center; line-height:2; font-size:16px; color:var(--text); white-space:pre-line; margin-bottom:16px; }
-.modal .modal-divider { text-align:center; font-weight:600; color:var(--accent); padding:8px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin:16px 0; }
-.modal .modal-analysis { text-align:justify; line-height:1.9; font-size:15px; color:var(--text); }
-.modal .modal-actions { display:flex; gap:10px; margin-top:20px; justify-content:center; }
-.modal-close { position:sticky; top:0; float:right; width:32px; height:32px; border-radius:50%; border:none; background:var(--border); color:var(--text); font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-.analysis-box { background:#fdfaf5; border:1px solid var(--border); border-radius:8px; padding:16px; margin-top:12px; line-height:1.9; text-align:justify; font-size:14px; display:none; }
+.modal .modal-title {
+  font-size:20px; font-weight:700; color:var(--accent);
+  text-align:center; margin-bottom:8px;
+}
+.modal .modal-content {
+  text-align:center; line-height:2; font-size:16px;
+  color:var(--text); white-space:pre-line; margin-bottom:16px;
+}
+.modal .modal-divider {
+  text-align:center; font-weight:600; color:var(--accent);
+  padding:8px 0; border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border); margin:16px 0;
+}
+.modal .modal-analysis {
+  text-align:justify; line-height:1.9; font-size:15px; color:var(--text);
+}
+.modal .modal-actions {
+  display:flex; gap:10px; margin-top:20px; justify-content:center;
+}
+.modal-close {
+  position:sticky; top:0; float:right; width:32px; height:32px;
+  border-radius:50%; border:none; background:var(--border); color:var(--text);
+  font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+}
+
+/* Analysis box on input page */
+.analysis-box {
+  background:#fdfaf5; border:1px solid var(--border); border-radius:8px;
+  padding:16px; margin-top:12px; line-height:1.9; text-align:justify;
+  font-size:14px; display:none;
+}
 .analysis-box.show { display:block; }
-.analysis-box .divider { text-align:center; font-weight:600; color:var(--accent); padding:6px 0; margin-bottom:10px; border-bottom:1px dashed var(--border); }
-.loading { display:inline-block; width:16px; height:16px; border:2px solid #ccc; border-top-color:var(--accent); border-radius:50%; animation:spin .6s linear infinite; }
+.analysis-box .divider {
+  text-align:center; font-weight:600; color:var(--accent);
+  padding:6px 0; margin-bottom:10px; border-bottom:1px dashed var(--border);
+}
+
+/* Loading spinner */
+.loading {
+  display:inline-block; width:16px; height:16px;
+  border:2px solid #ccc; border-top-color:var(--accent);
+  border-radius:50%; animation:spin .6s linear infinite;
+}
 @keyframes spin { to{transform:rotate(360deg)} }
-#toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); z-index:300; background:#2c1810; color:#fff; padding:10px 22px; border-radius:20px; font-size:14px; opacity:0; transition:opacity .3s; pointer-events:none; }
+
+/* Toast */
+#toast {
+  position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
+  z-index:300; background:#2c1810; color:#fff; padding:10px 22px;
+  border-radius:20px; font-size:14px; opacity:0; transition:opacity .3s;
+  pointer-events:none;
+}
 #toast.show { opacity:1; }
+
+/* Empty state */
 .empty-state { text-align:center; padding:60px 20px; color:var(--text-light); }
 .empty-state .icon { font-size:48px; margin-bottom:12px; }
 .empty-state p { font-size:15px; line-height:1.8; }
+
+/* Settings */
 .setting-item { margin-bottom:16px; }
-.setting-item .hint { font-size:12px; color:#b8a590; margin-top:4px; }
+.setting-item .hint {
+  font-size:12px; color:#b8a590; margin-top:4px;
+}
+
+/* Search */
 .search-bar { margin-bottom:16px; }
-.batch-bar { display:flex; gap:10px; align-items:center; padding:12px 0; flex-wrap:wrap; }
-@media (min-width:600px) { .modal { border-radius:var(--radius); margin-bottom:40px; } .modal-overlay { align-items:center; } }
+
+/* Batch bar */
+.batch-bar {
+  display:flex; gap:10px; align-items:center; padding:12px 0; flex-wrap:wrap;
+}
+
+@media (min-width:600px) {
+  .modal { border-radius:var(--radius); margin-bottom:40px; }
+  .modal-overlay { align-items:center; }
+}
 </style>
 </head>
 <body>
@@ -92,6 +202,7 @@ textarea { min-height:160px; line-height:1.8; }
     <a href="#settings" data-page="settings">⚙️ 设置</a>
   </nav>
   <main>
+    <!-- ═══ 录入页 ═══ -->
     <section id="page-input" class="page active">
       <div class="card">
         <label>输入诗词</label>
@@ -112,14 +223,15 @@ textarea { min-height:160px; line-height:1.8; }
       <div id="inputMsg" style="text-align:center;margin-top:8px;font-size:13px;color:var(--accent)"></div>
     </section>
 
+    <!-- ═══ 诗集页 ═══ -->
     <section id="page-collection" class="page">
       <div class="search-bar">
         <input type="text" id="searchInput" placeholder="🔍 搜索诗词…" oninput="App.loadList()">
       </div>
       <div class="batch-bar">
-        <button class="btn btn-outline btn-sm" onclick="App.exportAll()">📄 导出Word</button>
-        <button class="btn btn-outline btn-sm" onclick="App.exportJSON()">📤 备份JSON</button>
-        <button class="btn btn-outline btn-sm" onclick="App.importJSON()">📥 导入JSON</button>
+        <button class="btn btn-outline btn-sm" onclick="App.exportAll()">📄 导出 Word</button>
+        <button class="btn btn-outline btn-sm" onclick="App.exportJSON()">📤 备份 JSON</button>
+        <button class="btn btn-outline btn-sm" onclick="App.importJSON()">📥 导入 JSON</button>
         <span style="font-size:13px;color:var(--text-light)" id="countLabel"></span>
       </div>
       <div id="poemList"></div>
@@ -129,30 +241,37 @@ textarea { min-height:160px; line-height:1.8; }
       </div>
     </section>
 
+    <!-- ═══ 设置页 ═══ -->
     <section id="page-settings" class="page">
       <div class="card">
         <h3 style="margin-bottom:16px;font-size:17px;color:var(--accent)">AI 接口配置</h3>
         <div class="setting-item">
           <label>API 地址</label>
           <input type="url" id="apiUrl" placeholder="https://api.deepseek.com/chat/completions" value="https://api.deepseek.com/chat/completions">
-          <div class="hint">默认 DeepSeek，兼容 OpenAI 格式</div>
+          <div class="hint">默认使用 DeepSeek，兼容 OpenAI 格式的接口均可</div>
         </div>
         <div class="setting-item">
-          <label>模型</label>
+          <label>模型名称</label>
           <input type="text" id="apiModel" value="deepseek-chat">
         </div>
         <div class="setting-item">
           <label>API Key</label>
           <input type="password" id="apiKey" placeholder="sk-...">
-          <div class="hint">仅存本地，不上传。<a href="https://platform.deepseek.com" target="_blank" style="color:var(--accent)">获取 Key</a></div>
+          <div class="hint">
+            密钥仅保存在手机本地，不会上传。<br>
+            去 <a href="https://platform.deepseek.com" target="_blank" style="color:var(--accent)">platform.deepseek.com</a> 注册获取 Key（新用户免费额度）
+          </div>
         </div>
-        <button class="btn btn-outline btn-sm" onclick="App.testApi()">🔗 测试</button>
+        <button class="btn btn-outline btn-sm" onclick="App.testApi()">🔗 测试连接</button>
         <span id="apiTestResult" style="margin-left:10px;font-size:13px"></span>
       </div>
       <div class="card">
         <h3 style="margin-bottom:12px;font-size:17px;color:var(--accent)">关于</h3>
         <p style="font-size:14px;color:var(--text-light);line-height:1.8">
-          路笛诗斋 v1.1<br>诗词收录 · AI 赏析 · Word 导出 · JSON 备份<br>数据仅存本机，可离线浏览。
+          路笛诗斋 v1.1<br>
+          诗词收录 · AI 赏析 · Word 导出 · JSON 备份<br>
+          所有数据仅存于本机，不上传任何服务器。<br>
+          支持离线浏览（AI 功能需联网）。
         </p>
       </div>
     </section>
@@ -166,9 +285,12 @@ textarea { min-height:160px; line-height:1.8; }
 <div id="modalContainer"></div>
 
 <script>
-// ========== IndexedDB ==========
+// ═══════════════════════════════════
+//  IndexedDB — 本地数据库
+// ═══════════════════════════════════
 const DB = {
   _db: null,
+
   init() {
     return new Promise((resolve, reject) => {
       const req = indexedDB.open('LudiPoetry', 1);
@@ -186,6 +308,7 @@ const DB = {
       req.onerror = (e) => reject(e.target.error);
     });
   },
+
   async add(poem) {
     return new Promise((resolve, reject) => {
       const tx = DB._db.transaction('poems', 'readwrite');
@@ -195,15 +318,18 @@ const DB = {
       req.onerror = (e) => reject(e.target.error);
     });
   },
+
   async update(id, poem) {
     return new Promise((resolve, reject) => {
       const tx = DB._db.transaction('poems', 'readwrite');
-      poem.id = id; poem.updatedAt = Date.now();
+      poem.id = id;
+      poem.updatedAt = Date.now();
       const req = tx.objectStore('poems').put(poem);
       req.onsuccess = () => resolve();
       req.onerror = (e) => reject(e.target.error);
     });
   },
+
   async getAll(query) {
     return new Promise((resolve, reject) => {
       const tx = DB._db.transaction('poems', 'readonly');
@@ -214,9 +340,9 @@ const DB = {
         if (query) {
           const q = query.toLowerCase();
           poems = poems.filter(p =>
-            (p.title||'').toLowerCase().includes(q) ||
-            (p.content||'').toLowerCase().includes(q) ||
-            (p.analysis||'').toLowerCase().includes(q)
+            (p.title || '').toLowerCase().includes(q) ||
+            (p.content || '').toLowerCase().includes(q) ||
+            (p.analysis || '').toLowerCase().includes(q)
           );
         }
         resolve(poems);
@@ -224,6 +350,7 @@ const DB = {
       req.onerror = (e) => reject(e.target.error);
     });
   },
+
   async get(id) {
     return new Promise((resolve, reject) => {
       const tx = DB._db.transaction('poems', 'readonly');
@@ -232,6 +359,7 @@ const DB = {
       req.onerror = (e) => reject(e.target.error);
     });
   },
+
   async remove(id) {
     return new Promise((resolve, reject) => {
       const tx = DB._db.transaction('poems', 'readwrite');
@@ -240,302 +368,648 @@ const DB = {
       req.onerror = (e) => reject(e.target.error);
     });
   },
-  async clear() {
-    return new Promise((resolve, reject) => {
-      const tx = DB._db.transaction('poems', 'readwrite');
-      tx.objectStore('poems').clear();
-      tx.oncomplete = () => resolve();
-      tx.onerror = (e) => reject(e.target.error);
-    });
-  },
+
   async settings() {
     return new Promise((resolve) => {
       const tx = DB._db.transaction('settings', 'readonly');
       const req = tx.objectStore('settings').getAll();
       req.onsuccess = (e) => {
-        const m = {}; e.target.result.forEach(r => m[r.key]=r.value); resolve(m);
+        const m = {};
+        e.target.result.forEach(r => { m[r.key] = r.value; });
+        resolve(m);
       };
     });
   },
+
   async setSetting(key, value) {
     return new Promise((resolve) => {
       const tx = DB._db.transaction('settings', 'readwrite');
-      tx.objectStore('settings').put({key,value});
+      tx.objectStore('settings').put({ key, value });
       tx.oncomplete = () => resolve();
     });
   }
 };
 
-// ========== AI ==========
+// ═══════════════════════════════════
+//  AI 服务 — 调用 DeepSeek
+// ═══════════════════════════════════
 const AI = {
-  async call(sys, usr, temp=0.7) {
+  async call(sysPrompt, userPrompt, temp) {
+    if (temp === undefined) temp = 0.7;
     const s = await DB.settings();
     const url = s.apiUrl || 'https://api.deepseek.com/chat/completions';
     const model = s.apiModel || 'deepseek-chat';
     const key = s.apiKey || '';
-    if (!key) throw new Error('请先在设置中填写 API Key');
+    if (!key) throw new Error('请先在「设置」中填写 API Key');
+
     const resp = await fetch(url, {
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-      body:JSON.stringify({model, temperature:temp,
-        messages:[{role:'system',content:sys},{role:'user',content:usr}]})
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + key
+      },
+      body: JSON.stringify({
+        model: model,
+        temperature: temp,
+        messages: [
+          { role: 'system', content: sysPrompt },
+          { role: 'user', content: userPrompt }
+        ]
+      })
     });
-    if (!resp.ok) { const e = await resp.text(); throw new Error('API错误('+resp.status+'): '+e.substring(0,150)); }
-    const d = await resp.json();
-    return d.choices[0].message.content.trim();
+
+    if (!resp.ok) {
+      const errText = await resp.text();
+      throw new Error('API 请求失败 (' + resp.status + '): ' + errText.substring(0, 200));
+    }
+
+    const data = await resp.json();
+    return data.choices[0].message.content.trim();
   }
 };
 
-// ========== DOCX ==========
+// ═══════════════════════════════════
+//  Word 文档导出（DOCX）
+// ═══════════════════════════════════
 const Docx = {
-  esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); },
-  para(text, opts) {
-    const st = opts.style ? '<w:pStyle w:val="'+opts.style+'"/>' : '';
-    const jc = opts.align==='center'?'<w:jc w:val="center"/>':opts.align==='left'?'<w:jc w:val="left"/>':opts.align==='both'?'<w:jc w:val="both"/>':'';
-    const b = opts.bold ? '<w:b/><w:bCs/>' : '';
-    return '<w:p><w:pPr>'+st+jc+'</w:pPr><w:r><w:rPr>'+b+'</w:rPr><w:t xml:space="preserve">'+Docx.esc(text)+'</w:t></w:r></w:p>';
+  esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   },
+
+  // 生成一个 OOXML 段落
+  para(text, opts) {
+    opts = opts || {};
+    const styleXml = opts.style
+      ? '<w:pStyle w:val="' + opts.style + '"/>'
+      : '';
+    const jcXml = opts.align === 'center'
+      ? '<w:jc w:val="center"/>'
+      : opts.align === 'left'
+        ? '<w:jc w:val="left"/>'
+        : opts.align === 'both'
+          ? '<w:jc w:val="both"/>'
+          : '';
+    const boldXml = opts.bold
+      ? '<w:b/><w:bCs/>'
+      : '';
+    return '<w:p><w:pPr>' + styleXml + jcXml
+      + '</w:pPr><w:r><w:rPr>' + boldXml
+      + '</w:rPr><w:t xml:space="preserve">' + this.esc(text)
+      + '</w:t></w:r></w:p>';
+  },
+
+  // 分页符
   pageBreak() {
     return '<w:p><w:r><w:br w:type="page"/></w:r></w:p>';
   },
+
   async gen(poems) {
-    if (typeof JSZip === 'undefined') throw new Error('JSZip未加载，请检查网络');
+    if (typeof JSZip === 'undefined') {
+      throw new Error('JSZip 未加载，请检查网络连接后重试');
+    }
+
     const zip = new JSZip();
-    zip.file('[Content_Types].xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>');
-    zip.folder('_rels').file('.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>');
-    const w = zip.folder('word');
-    w.folder('_rels').file('document.xml.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>');
-    w.file('styles.xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:style w:type="paragraph" w:styleId="2"><w:name w:val="heading 2"/><w:basedOn w:val="a"/><w:next w:val="a"/><w:uiPriority w:val="9"/><w:qFormat/><w:pPr><w:keepNext/><w:keepLines/><w:spacing w:before="360" w:after="120"/></w:pPr><w:rPr><w:b/><w:bCs/><w:sz w:val="32"/><w:szCs w:val="32"/></w:rPr></w:style></w:styles>');
-    let parts = [];
-    poems.forEach((p,i) => {
-      parts.push(Docx.para(p.title||'无题',{style:'2',align:'center'}));
-      (p.content||'').split('\n').forEach(l => parts.push(Docx.para(l,{align:'center'})));
-      parts.push(Docx.para('【作品赏析】',{align:'left',bold:true}));
-      parts.push(Docx.para(p.analysis||'',{align:'both'}));
-      // Page break between poems (except after the last one)
-      if (i < poems.length-1) parts.push(Docx.pageBreak());
-    });
-    w.file('document.xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+parts.join('')+'</w:body></w:document>');
-    const blob = await zip.generateAsync({type:'blob'});
+
+    // [Content_Types].xml
+    zip.file('[Content_Types].xml',
+      '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+      + '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
+      + '<Default Extension="xml" ContentType="application/xml"/>'
+      + '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
+      + '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>'
+      + '</Types>');
+
+    // _rels/.rels
+    zip.folder('_rels').file('.rels',
+      '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+      + '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>'
+      + '</Relationships>');
+
+    const wordDir = zip.folder('word');
+
+    // word/_rels/document.xml.rels
+    wordDir.folder('_rels').file('document.xml.rels',
+      '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+      + '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'
+      + '</Relationships>');
+
+    // word/styles.xml — 定义「标题 2」样式
+    wordDir.file('styles.xml',
+      '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      + '<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+      + '<w:style w:type="paragraph" w:styleId="2">'
+      + '<w:name w:val="heading 2"/>'
+      + '<w:basedOn w:val="a"/>'
+      + '<w:next w:val="a"/>'
+      + '<w:uiPriority w:val="9"/>'
+      + '<w:qFormat/>'
+      + '<w:pPr><w:keepNext/><w:keepLines/><w:spacing w:before="360" w:after="120"/></w:pPr>'
+      + '<w:rPr><w:b/><w:bCs/><w:sz w:val="32"/><w:szCs w:val="32"/></w:rPr>'
+      + '</w:style>'
+      + '</w:styles>');
+
+    // 构建文档 body
+    let bodyParts = [];
+
+    for (let i = 0; i < poems.length; i++) {
+      const p = poems[i];
+
+      // 标题 — 居中，标题2样式
+      bodyParts.push(Docx.para(p.title || '无题', {
+        style: '2',
+        align: 'center'
+      }));
+
+      // 诗词正文 — 居中，每行一个段落
+      const lines = (p.content || '').split('\n');
+      for (const line of lines) {
+        bodyParts.push(Docx.para(line, { align: 'center' }));
+      }
+
+      // 【作品赏析】— 左对齐，加粗（按用户要求修改）
+      bodyParts.push(Docx.para('【作品赏析】', {
+        align: 'left',
+        bold: true
+      }));
+
+      // 赏析正文 — 两端对齐
+      bodyParts.push(Docx.para(p.analysis || '', { align: 'both' }));
+
+      // 每个作品间插入分页符（最后一个除外）
+      if (i < poems.length - 1) {
+        bodyParts.push(Docx.pageBreak());
+      }
+    }
+
+    // word/document.xml
+    wordDir.file('document.xml',
+      '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+      + '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+      + '<w:body>' + bodyParts.join('') + '</w:body>'
+      + '</w:document>');
+
+    // 生成 ZIP 并触发下载
+    const blob = await zip.generateAsync({ type: 'blob' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = poems.length===1 ? '路笛诗斋_'+((poems[0].title||'无题').replace(/[\\/:*?"<>|]/g,'_'))+'.docx' : '路笛诗斋_合集_'+new Date().toISOString().slice(0,10)+'.docx';
-    a.click(); URL.revokeObjectURL(url);
+
+    if (poems.length === 1) {
+      const safeTitle = (poems[0].title || '无题')
+        .replace(/[\\/:*?"<>|]/g, '_');
+      a.download = '路笛诗斋_' + safeTitle + '.docx';
+    } else {
+      a.download = '路笛诗斋_合集_' + new Date().toISOString().slice(0, 10) + '.docx';
+    }
+
+    a.click();
+    URL.revokeObjectURL(url);
   }
 };
 
-// ========== JSON Backup ==========
+// ═══════════════════════════════════
+//  JSON 备份 & 导入
+// ═══════════════════════════════════
 const Backup = {
   async exportAll() {
     const poems = await DB.getAll();
-    const data = poems.map(p => ({ title: p.title, content: p.content, analysis: p.analysis }));
+    const data = poems.map(function(p) {
+      return {
+        title: p.title,
+        content: p.content,
+        analysis: p.analysis
+      };
+    });
     const json = JSON.stringify(data, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = '路笛诗斋_备份_' + new Date().toISOString().slice(0,10) + '.json';
+    a.download = '路笛诗斋_备份_' + new Date().toISOString().slice(0, 10) + '.json';
     a.click();
     URL.revokeObjectURL(url);
   },
-  async importFrom(data) {
-    if (!Array.isArray(data)) throw new Error('JSON格式错误：需要数组');
-    const existing = await DB.getAll();
-    const existingTitles = new Set(existing.map(p => (p.title||'').toLowerCase()));
-    let added = 0, skipped = 0;
-    for (const item of data) {
-      if (!item.content || !item.content.trim()) { skipped++; continue; }
-      // Check for duplicates by title
-      const t = (item.title||'').trim().toLowerCase();
-      if (t && existingTitles.has(t)) { skipped++; continue; }
-      await DB.add({ title: item.title || '无题', content: item.content.trim(), analysis: item.analysis || '' });
-      if (t) existingTitles.add(t); // prevent dupes within the import batch too
-      added++;
+
+  async importFrom(dataList) {
+    if (!Array.isArray(dataList)) {
+      throw new Error('JSON 格式不正确：需要是数组');
     }
-    return { added, skipped };
+
+    const existing = await DB.getAll();
+    const existingTitles = new Set();
+    existing.forEach(function(p) {
+      existingTitles.add((p.title || '').toLowerCase());
+    });
+
+    let addedCount = 0;
+    let skippedCount = 0;
+
+    for (const item of dataList) {
+      if (!item.content || !item.content.trim()) {
+        skippedCount++;
+        continue;
+      }
+
+      const t = (item.title || '').trim().toLowerCase();
+
+      // 跳过重复题目（区分大小写统一用小写比较）
+      if (t && existingTitles.has(t)) {
+        skippedCount++;
+        continue;
+      }
+
+      await DB.add({
+        title: item.title || '无题',
+        content: item.content.trim(),
+        analysis: item.analysis || ''
+      });
+
+      if (t) existingTitles.add(t); // 防止批量导入内部的重复
+      addedCount++;
+    }
+
+    return { added: addedCount, skipped: skippedCount };
   }
 };
 
-// ========== App ==========
+// ═══════════════════════════════════
+//  主程序
+// ═══════════════════════════════════
 const App = {
-  editingId: null,
-  async init() { await DB.init(); this.bindNav(); this.loadSettings(); this.loadList(); },
-  bindNav() {
-    document.querySelectorAll('nav a').forEach(a => a.addEventListener('click',e=>{
-      e.preventDefault();
-      document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
-      a.classList.add('active');
-      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-      document.getElementById('page-'+a.dataset.page).classList.add('active');
-      if (a.dataset.page === 'collection') this.loadList();
-    }));
+  editingId: null,      // 编辑模式下的诗词 id
+  currentModalId: null, // 当前弹窗显示的诗词 id
+
+  async init() {
+    await DB.init();
+    this.bindNav();
+    this.loadSettings();
+    this.loadList();
   },
+
+  // ── 导航 ──
+  bindNav() {
+    const self = this;
+    document.querySelectorAll('nav a').forEach(function(a) {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const pageId = a.dataset.page;
+
+        // active 样式
+        document.querySelectorAll('nav a').forEach(function(x) {
+          x.classList.remove('active');
+        });
+        a.classList.add('active');
+
+        // 切换页面
+        document.querySelectorAll('.page').forEach(function(p) {
+          p.classList.remove('active');
+        });
+        document.getElementById('page-' + pageId).classList.add('active');
+
+        if (pageId === 'collection') self.loadList();
+      });
+    });
+  },
+
+  // ── 设置 ──
   async loadSettings() {
     const s = await DB.settings();
     document.getElementById('apiUrl').value = s.apiUrl || 'https://api.deepseek.com/chat/completions';
     document.getElementById('apiModel').value = s.apiModel || 'deepseek-chat';
     document.getElementById('apiKey').value = s.apiKey || '';
   },
+
   async saveSettings() {
     await DB.setSetting('apiUrl', document.getElementById('apiUrl').value.trim());
     await DB.setSetting('apiModel', document.getElementById('apiModel').value.trim());
     await DB.setSetting('apiKey', document.getElementById('apiKey').value.trim());
   },
+
   async testApi() {
     await this.saveSettings();
-    const r = document.getElementById('apiTestResult');
-    r.innerHTML = '<span class="loading"></span>';
-    try { await AI.call('你是助手','回复"成功"',0); r.textContent='✅ 连接正常'; this.toast('API连接正常'); }
-    catch(e) { r.textContent='❌ '+e.message.substring(0,60); }
+    const resultEl = document.getElementById('apiTestResult');
+    resultEl.innerHTML = '<span class="loading"></span>  测试中...';
+
+    try {
+      await AI.call('你是一个助手', '请回复"连接成功"', 0);
+      resultEl.textContent = '✅ 连接正常！';
+      this.toast('✅ API 连接正常');
+    } catch (e) {
+      resultEl.textContent = '❌ 失败：' + e.message.substring(0, 60);
+      this.toast('❌ ' + e.message);
+    }
   },
+
+  // ── AI 拟题 ──
   async aiTitle() {
-    const c = document.getElementById('poemInput').value.trim();
-    if (!c) { this.toast('请先输入诗词'); return; }
+    const content = document.getElementById('poemInput').value.trim();
+    if (!content) { this.toast('⚠️ 请先输入诗词内容'); return; }
+
     const btn = document.getElementById('btnTitle');
-    btn.disabled=true; btn.innerHTML='<span class="loading"></span>';
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading"></span>  生成中...';
+
     try {
-      const t = await AI.call('你是诗词专家。为以下诗词拟一个精炼题目（不超过12字），只输出题目，不含引号。', c, 0.3);
-      document.getElementById('titleInput').value = t;
-      this.toast('✅ 题目已生成');
-    } catch(e) { this.toast('❌ '+e.message); }
-    btn.disabled=false; btn.textContent='🤖 AI 拟题';
+      const title = await AI.call(
+        '你是一位诗词专家。请为下面这首诗词拟一个精炼的题目。只需要输出题目本身（不超过12个字），不要加引号、标点符号或任何额外解释。',
+        content,
+        0.3
+      );
+      document.getElementById('titleInput').value = title;
+      this.toast('✅ 题目已生成：' + title);
+    } catch (e) {
+      this.toast('❌ ' + e.message);
+    }
+
+    btn.disabled = false;
+    btn.textContent = '🤖 AI 拟题';
   },
+
+  // ── AI 赏析 ──
   async aiAnalyze() {
-    const c = document.getElementById('poemInput').value.trim();
-    if (!c) { this.toast('请先输入诗词'); return; }
+    const content = document.getElementById('poemInput').value.trim();
+    if (!content) { this.toast('⚠️ 请先输入诗词内容'); return; }
+
+    const title = document.getElementById('titleInput').value.trim() || '无题';
     const btn = document.getElementById('btnAnalyze');
-    btn.disabled=true; btn.innerHTML='<span class="loading"></span>';
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading"></span>  赏析中...';
+
     try {
-      const t = document.getElementById('titleInput').value.trim() || '无题';
-      const a = await AI.call('你是诗词鉴赏家。从意象、意境、语言、情感角度赏析，150-300字，优美平实。', '《'+t+'》\n'+c, 0.7);
-      document.getElementById('analysisText').textContent = a;
+      const analysis = await AI.call(
+        '你是一位诗词鉴赏家。请对以下诗词进行赏析，从意象、意境、语言、情感等角度展开分析。字数150-300字，语言优美但平实自然。',
+        '《' + title + '》\n\n' + content,
+        0.7
+      );
+      document.getElementById('analysisText').textContent = analysis;
       document.getElementById('analysisBox').classList.add('show');
       this.toast('✅ 赏析完成');
-    } catch(e) { this.toast('❌ '+e.message); }
-    btn.disabled=false; btn.textContent='🔍 AI 赏析';
+    } catch (e) {
+      this.toast('❌ ' + e.message);
+    }
+
+    btn.disabled = false;
+    btn.textContent = '🔍 AI 赏析';
   },
+
+  // ── 保存 ──
   async save() {
     const content = document.getElementById('poemInput').value.trim();
-    if (!content) { this.toast('请先输入诗词'); return; }
+    if (!content) { this.toast('⚠️ 请先输入诗词内容'); return; }
+
     const title = document.getElementById('titleInput').value.trim() || '无题';
     const analysis = document.getElementById('analysisText').textContent.trim();
-    const poem = { title, content, analysis };
+
+    const poem = { title: title, content: content, analysis: analysis };
     const btn = document.getElementById('btnSave');
-    btn.disabled=true; btn.textContent='保存中…';
+    btn.disabled = true;
+    btn.textContent = '保存中...';
+
     try {
-      if (this.editingId) { await DB.update(this.editingId, poem); this.toast('✅ 已更新'); }
-      else { await DB.add(poem); this.toast('✅ 已保存'); }
+      if (this.editingId) {
+        await DB.update(this.editingId, poem);
+        this.toast('✅ 修改已保存');
+      } else {
+        await DB.add(poem);
+        this.toast('✅ 已添加到诗集');
+      }
       this.clearInput();
-    } catch(e) { this.toast('❌ '+e.message); }
-    btn.disabled=false; btn.textContent='💾 保存到诗集';
+    } catch (e) {
+      this.toast('❌ ' + e.message);
+    }
+
+    btn.disabled = false;
+    btn.textContent = '💾 保存到诗集';
   },
+
   clearInput() {
-    document.getElementById('poemInput').value='';
-    document.getElementById('titleInput').value='';
-    document.getElementById('analysisText').textContent='';
+    document.getElementById('poemInput').value = '';
+    document.getElementById('titleInput').value = '';
+    document.getElementById('analysisText').textContent = '';
     document.getElementById('analysisBox').classList.remove('show');
-    document.getElementById('inputMsg').textContent='';
-    this.editingId=null;
+    document.getElementById('inputMsg').textContent = '';
+    this.editingId = null;
   },
+
+  // ── 列表 ──
   async loadList() {
-    const q = document.getElementById('searchInput').value;
-    const poems = await DB.getAll(q);
-    document.getElementById('countLabel').textContent = '共 '+poems.length+' 首';
-    if (poems.length===0) {
-      document.getElementById('poemList').innerHTML='';
-      document.getElementById('emptyState').style.display='block';
+    const query = document.getElementById('searchInput').value;
+    const poems = await DB.getAll(query);
+
+    document.getElementById('countLabel').textContent = '共 ' + poems.length + ' 首';
+
+    if (poems.length === 0) {
+      document.getElementById('poemList').innerHTML = '';
+      document.getElementById('emptyState').style.display = 'block';
       return;
     }
-    document.getElementById('emptyState').style.display='none';
-    document.getElementById('poemList').innerHTML = poems.map(p => {
-      const pre = (p.content||'').replace(/\n/g,' / ').substring(0,50);
-      const date = p.createdAt ? new Date(p.createdAt).toLocaleDateString('zh-CN') : '';
-      return '<div class="poem-item" onclick="App.view('+p.id+')"><div class="item-title">'+App.esc(p.title||'无题')+'</div><div class="item-preview">'+App.esc(pre)+'</div><div class="item-date">'+date+'</div><button class="delete-btn" onclick="event.stopPropagation();App.del('+p.id+')">✕</button></div>';
+
+    document.getElementById('emptyState').style.display = 'none';
+
+    const self = this;
+    document.getElementById('poemList').innerHTML = poems.map(function(p) {
+      const preview = (p.content || '').replace(/\n/g, '  /  ').substring(0, 50);
+      const date = p.createdAt
+        ? new Date(p.createdAt).toLocaleDateString('zh-CN')
+        : '';
+
+      return '<div class="poem-item" onclick="App.view(' + p.id + ')">'
+        + '<div class="item-title">' + App.esc(p.title || '无题') + '</div>'
+        + '<div class="item-preview">' + App.esc(preview) + '</div>'
+        + '<div class="item-date">' + date + '</div>'
+        + '<button class="delete-btn" onclick="event.stopPropagation();App.del(' + p.id + ')">✕</button>'
+        + '</div>';
     }).join('');
   },
+
+  // ── 详情弹窗 ──
   async view(id) {
-    const p = await DB.get(id); if (!p) return;
+    const p = await DB.get(id);
+    if (!p) return;
+
     document.getElementById('modalContainer').innerHTML =
-      '<div class="modal-overlay" onclick="if(event.target===this)App.closeModal()"><div class="modal">'+
-      '<button class="modal-close" onclick="App.closeModal()">✕</button>'+
-      '<div class="modal-title">'+App.esc(p.title||'无题')+'</div>'+
-      '<div class="modal-content">'+App.esc(p.content||'').replace(/\n/g,'<br>')+'</div>'+
-      '<div class="modal-divider">【作品赏析】</div>'+
-      '<div class="modal-analysis">'+App.esc(p.analysis||'暂无赏析')+'</div>'+
-      '<div class="modal-actions">'+
-      '<button class="btn btn-outline btn-sm" onclick="App.edit('+id+')">✏️ 编辑</button>'+
-      '<button class="btn btn-primary btn-sm" onclick="App.exp('+id+')">📄 导出Word</button></div></div></div>';
+      '<div class="modal-overlay" onclick="if(event.target===this)App.closeModal()">'
+      + '<div class="modal">'
+      + '<button class="modal-close" onclick="App.closeModal()">✕</button>'
+      + '<div class="modal-title">' + App.esc(p.title || '无题') + '</div>'
+      + '<div class="modal-content">' + App.esc(p.content || '').replace(/\n/g, '<br>') + '</div>'
+      + '<div class="modal-divider">【作品赏析】</div>'
+      + '<div class="modal-analysis">' + App.esc(p.analysis || '暂无赏析') + '</div>'
+      + '<div class="modal-actions">'
+      + '<button class="btn btn-outline btn-sm" onclick="App.edit(' + id + ')">✏️ 修改</button>'
+      + '<button class="btn btn-primary btn-sm" onclick="App.exp(' + id + ')">📄 导出 Word</button>'
+      + '</div></div></div>';
   },
-  closeModal() { document.getElementById('modalContainer').innerHTML=''; },
+
+  closeModal() {
+    document.getElementById('modalContainer').innerHTML = '';
+  },
+
+  // ── 编辑 ──
   async edit(id) {
-    const p = await DB.get(id); if (!p) return;
+    const p = await DB.get(id);
+    if (!p) return;
+
     this.closeModal();
+
+    // 切换到录入页
     document.querySelector('nav a[data-page="input"]').click();
+
     this.editingId = id;
-    document.getElementById('poemInput').value = p.content||'';
-    document.getElementById('titleInput').value = p.title||'';
-    document.getElementById('inputMsg').textContent = '✏️ 编辑模式';
+    document.getElementById('poemInput').value = p.content || '';
+    document.getElementById('titleInput').value = p.title || '';
+    document.getElementById('inputMsg').textContent = '✏️ 编辑模式 — 修改后点击「保存到诗集」';
+
     if (p.analysis) {
       document.getElementById('analysisText').textContent = p.analysis;
       document.getElementById('analysisBox').classList.add('show');
     }
-    window.scrollTo(0,0);
+
+    window.scrollTo(0, 0);
   },
+
+  // ── 删除 ──
+  async del(id) {
+    if (!confirm('确定要删除这首诗吗？此操作不可恢复。')) return;
+    try {
+      await DB.remove(id);
+      this.toast('✕ 已删除');
+      this.loadList();
+    } catch (e) {
+      this.toast('❌ ' + e.message);
+    }
+  },
+
+  // ═══ Word 导出 ═══
+
+  // 导出单首
   async exp(id) {
-    try { const p = await DB.get(id); if (p) { await Docx.gen([p]); this.toast('✅ 导出成功'); } }
-    catch(e) { this.toast('❌ '+e.message); }
+    try {
+      const p = await DB.get(id);
+      if (p) {
+        await Docx.gen([p]);
+        this.toast('✅ Word 导出成功');
+      }
+    } catch (e) {
+      this.toast('❌ ' + e.message);
+    }
   },
+
+  // 导出全部
   async exportAll() {
     try {
       const poems = await DB.getAll();
-      if (poems.length===0) { this.toast('诗集为空'); return; }
-      await Docx.gen(poems); this.toast('✅ 已导出 '+poems.length+' 首');
-    } catch(e) { this.toast('❌ '+e.message); }
+      if (poems.length === 0) {
+        this.toast('⚠️ 诗集为空，无需导出');
+        return;
+      }
+      await Docx.gen(poems);
+      this.toast('✅ 已导出 ' + poems.length + ' 首');
+    } catch (e) {
+      this.toast('❌ ' + e.message);
+    }
   },
-  // JSON backup
+
+  // ═══ JSON 备份 ═══
+
+  // 导出 JSON
   async exportJSON() {
     try {
       const poems = await DB.getAll();
-      if (poems.length===0) { this.toast('诗集为空'); return; }
+      if (poems.length === 0) {
+        this.toast('⚠️ 诗集为空');
+        return;
+      }
       await Backup.exportAll();
-      this.toast('✅ JSON备份已下载，共 '+poems.length+' 首');
-    } catch(e) { this.toast('❌ '+e.message); }
+      this.toast('✅ JSON 备份已下载，共 ' + poems.length + ' 首');
+    } catch (e) {
+      this.toast('❌ ' + e.message);
+    }
   },
+
+  // 触发导入（点击隐藏的 file input）
   importJSON() {
     document.getElementById('jsonFileInput').click();
   },
+
+  // 处理导入文件
   async handleJSONImport(event) {
     const file = event.target.files[0];
     if (!file) return;
+
     try {
       const text = await file.text();
       const data = JSON.parse(text);
-      if (!Array.isArray(data)) { this.toast('格式错误：需要JSON数组'); return; }
+
+      if (!Array.isArray(data)) {
+        this.toast('❌ 格式错误：JSON 内容不是数组');
+        return;
+      }
+
       const result = await Backup.importFrom(data);
-      this.toast('✅ 导入'+result.added+'首'+(result.skipped>0?'，跳过'+result.skipped+'首重复':''));
+
+      let msg = '✅ 导入 ' + result.added + ' 首';
+      if (result.skipped > 0) {
+        msg += '，跳过 ' + result.skipped + ' 首重复';
+      }
+      this.toast(msg);
       this.loadList();
-    } catch(e) {
-      this.toast('❌ '+e.message);
+
+    } catch (e) {
+      this.toast('❌ ' + e.message);
     }
-    // Reset file input so same file can be re-imported
+
+    // 重置 input，以便同一个文件可以再次导入
     event.target.value = '';
   },
-  async del(id) {
-    if (!confirm('确定删除？不可恢复。')) return;
-    try { await DB.remove(id); this.toast('已删除'); this.loadList(); }
-    catch(e) { this.toast('❌ '+e.message); }
+
+  // ═══ 工具函数 ═══
+
+  // HTML 转义
+  esc(s) {
+    const div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
   },
-  esc(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; },
+
+  // Toast 提示
   toast(msg) {
     const el = document.getElementById('toast');
-    el.textContent=msg; el.classList.add('show');
-    clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2500);
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._timer);
+    el._timer = setTimeout(function() {
+      el.classList.remove('show');
+    }, 2500);
   }
 };
-document.addEventListener('DOMContentLoaded',()=>App.init());
-['apiUrl','apiModel','apiKey'].forEach(id=>document.getElementById(id).addEventListener('blur',()=>App.saveSettings()));
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+// ═══════════════════════════════════
+//  启动
+// ═══════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
+  App.init();
+});
+
+// 设置页自动保存
+['apiUrl', 'apiModel', 'apiKey'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('blur', function() { App.saveSettings(); });
+  }
+});
+
+// 注册 Service Worker（离线缓存）
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(function() {});
+}
 </script>
 </body>
 </html>
