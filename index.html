@@ -169,6 +169,11 @@ textarea { min-height:160px; line-height:1.8; }
 }
 #toast.show { opacity:1; }
 
+/* Home header */
+.home-header { text-align:center; padding:24px 16px 8px; }
+.home-title { font-size:28px; font-weight:700; color:var(--accent); letter-spacing:4px; }
+.home-subtitle { font-size:13px; color:var(--text-light); margin-top:6px; letter-spacing:1px; }
+
 /* Empty state */
 .empty-state { text-align:center; padding:60px 20px; color:var(--text-light); }
 .empty-state .icon { font-size:48px; margin-bottom:12px; }
@@ -204,6 +209,10 @@ textarea { min-height:160px; line-height:1.8; }
   <main>
     <!-- ═══ 录入页 ═══ -->
     <section id="page-input" class="page active">
+      <div class="home-header">
+        <div class="home-title">诗词赏析</div>
+        <div class="home-subtitle">—小川制作</div>
+      </div>
       <div class="card">
         <label>输入诗词</label>
         <textarea id="poemInput" placeholder="在此粘贴或输入您的诗词……&#10;每行一句"></textarea>
